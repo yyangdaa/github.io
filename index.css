@@ -558,8 +558,7 @@ body:not(.user-is-tabbing) a:focus {
     }
     
     .about__photo-container img {
-        max-width: 50%;
-        max-height: 200px;
+        max-width: 20vw;  /* Sets max width relative to viewport width */
         height: auto;
     }
 }
