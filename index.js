@@ -37,3 +37,16 @@
       alterStyles(isBackToTopRendered);
     }
   });
+
+  window.addEventListener("DOMContentLoaded", function(){
+    var dynamicText = document.getElementById("dynamic-text");
+    var text = ['I am a software developer', 'I am a student',];
+    var textIndex = 0;
+
+    setInterval(function(){
+      dynamicText.innerText = text[textIndex];
+      textIndex++;
+      if(textIndex == text.length)
+        textIndex = 0;
+    },2000);
+  });
