@@ -44,6 +44,7 @@
     var textIndex = 0;
 
     setInterval(function(){
+      textElement.classList.add('scrolling'); 
       dynamicText.innerText = text[textIndex];
       textIndex++;
       if(textIndex == text.length)
