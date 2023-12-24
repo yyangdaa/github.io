@@ -40,14 +40,17 @@
 
   window.addEventListener("DOMContentLoaded", function(){
     var dynamicText = document.getElementById("dynamic-text");
-    var text = ['I am a software developer', 'I am a student','entrepreneur'];
+    var text = ['I am a software developer', 'I am a student', 'I am an entrepreneur'];
     var textIndex = 0;
-
-    setInterval(function(){
-      dynamicText.classList.add('scrolling');
+  
+    function updateText() {
+      dynamicText.classList.remove('scrolling'); // Reset animation
       dynamicText.innerText = text[textIndex];
-      textIndex++;
-      if(textIndex == text.length)
-        textIndex = 0;
-    },2000);
+      dynamicText.classList.add('scrolling'); // Start animation
+      textIndex = (textIndex + 1) % text.length; // Move to the next index, loop back to 0 at the end
+    }
+  
+    setInterval(updateText, 2000);
+    updateText(); // Initial text setup
   });
+  
