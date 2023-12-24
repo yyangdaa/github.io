@@ -40,7 +40,7 @@
 
   window.addEventListener("DOMContentLoaded", function(){
     var dynamicText = document.getElementById("dynamic-text");
-    var text = ['I am a software developer', 'I am a student',];
+    var text = ['I am a software developer', 'I am a student','entrepreneur'];
     var textIndex = 0;
 
     setInterval(function(){
