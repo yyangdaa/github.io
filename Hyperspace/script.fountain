@@ -1,0 +1,26 @@
+the other day I was watching the latest Ludwig video and at about the three minute Mark I saw something remarkable.
+
+I mean did you see that? no? all right. hang on. isolate. Zoom. enhance. and loop.
+
+now I don't know who created this particular effect but I just want you to know that I have a very particular set of skills that completely prevent me from just enjoying a video like a normal person and require me to figure out how to put this effect on a website.
+
+Why you might ask? Enough questions.
+
+So I started my journey; by doing what? 
+Opening up a new codepen.
+
+I knew the only external asset I required was an image so I acquired one and I centered it on the screen.
+
+My first question upon analyzing the original was how many copies of the main image that I'd need to be Fading Into the background. A cursory glance told me that number was four but on further inspection I realized that actually couldn't be possible. if these two edges belong to the same image and that image was being stretched outward as it faded away it would become more and more distorted the further back that it got. 
+
+Since that wasn't the case, my only possible conclusion was that what appeared to be one single image was actually two images moving in sync. So, what I initially assumed to be four Images, was in fact eight.
+
+Now that I knew the correct number of images, I needed to find a way to animate them. In my mind I figured it would go something like this: here we have the main image sitting stationary at the top all of the other images, would be stacked directly behind it. So starting with image number two it would need to begin the animation centered and completely visible and end the animation shifted down away and completely hidden.
+
+I didn't know a good way to actually move it backwards so I settled on reducing the scale which effectively accomplished the same thing all of this would need to occur over a duration of a few seconds and it would need to repeat infinitely moving on to
+the third image. It would need to do the exact same thing only in the opposite direction since the main image would block any overlap. It would sort of visually trick the user into thinking it was just one image instead of two. The remaining three pairs of images would need to behave identically to images two and three. Only in order to stagger them as expected the start times of their animations would have to be delayed. Given the total animation time is 3 seconds I eventually figured out I could divide that time evenly to a achieve the correct intervals.
+
+Wait wait hang on this whole time, I've been so busy wondering whether or not I could recreate this effect that I never stopped to ask if I should. I mean what after all is the purpose of such an effect it made sense in a video but how can I make it make sense on a website? Alright time for some experimenting. Take for instance a game store website maybe it could be like the uh featured section. Eh that's a bit over the top ooh what if it was a hover effect? yeah I could set the opacity of
+the faders to Zero by default and then reveal on Hover. Oh and what if I assigned a color to each one and then said uh if the body has a card with that value that's currently being hovered change the background of the whole page. Huh that's pretty cool but still I ask. is there a point?
+
+hey somebody's smarter than me figure it out
