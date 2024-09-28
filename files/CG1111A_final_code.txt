@@ -1,0 +1,659 @@
+#include "MeMCore.h"
+
+// notes for celebration tune at the end of maze
+#define NOTE_B0  31
+#define NOTE_C1  33
+#define NOTE_CS1 35
+#define NOTE_D1  37
+#define NOTE_DS1 39
+#define NOTE_E1  41
+#define NOTE_F1  44
+#define NOTE_FS1 46
+#define NOTE_G1  49
+#define NOTE_GS1 52
+#define NOTE_A1  55
+#define NOTE_AS1 58
+#define NOTE_B1  62
+#define NOTE_C2  65
+#define NOTE_CS2 69
+#define NOTE_D2  73
+#define NOTE_DS2 78
+#define NOTE_E2  82
+#define NOTE_F2  87
+#define NOTE_FS2 93
+#define NOTE_G2  98
+#define NOTE_GS2 104
+#define NOTE_A2  110
+#define NOTE_AS2 117
+#define NOTE_B2  123
+#define NOTE_C3  131
+#define NOTE_CS3 139
+#define NOTE_D3  147
+#define NOTE_DS3 156
+#define NOTE_E3  165
+#define NOTE_F3  175
+#define NOTE_FS3 185
+#define NOTE_G3  196
+#define NOTE_GS3 208
+#define NOTE_A3  220
+#define NOTE_AS3 233
+#define NOTE_B3  247
+#define NOTE_C4  262
+#define NOTE_CS4 277
+#define NOTE_D4  294
+#define NOTE_DS4 311
+#define NOTE_E4  330
+#define NOTE_F4  349
+#define NOTE_FS4 370
+#define NOTE_G4  392
+#define NOTE_GS4 415
+#define NOTE_A4  440
+#define NOTE_AS4 466
+#define NOTE_B4  494
+#define NOTE_C5  523
+#define NOTE_CS5 554
+#define NOTE_D5  587
+#define NOTE_DS5 622
+#define NOTE_E5  659
+#define NOTE_F5  698
+#define NOTE_FS5 740
+#define NOTE_G5  784
+#define NOTE_GS5 831
+#define NOTE_A5  880
+#define NOTE_AS5 932
+#define NOTE_B5  988
+#define NOTE_C6  1047
+#define NOTE_CS6 1109
+#define NOTE_D6  1175
+#define NOTE_DS6 1245
+#define NOTE_E6  1319
+#define NOTE_F6  1397
+#define NOTE_FS6 1480
+#define NOTE_G6  1568
+#define NOTE_GS6 1661
+#define NOTE_A6  1760
+#define NOTE_AS6 1865
+#define NOTE_B6  1976
+#define NOTE_C7  2093
+#define NOTE_CS7 2217
+#define NOTE_D7  2349
+#define NOTE_DS7 2489
+#define NOTE_E7  2637
+#define NOTE_F7  2794
+#define NOTE_FS7 2960
+#define NOTE_G7  3136
+#define NOTE_GS7 3322
+#define NOTE_A7  3520
+#define NOTE_AS7 3729
+#define NOTE_B7  3951
+#define NOTE_C8  4186
+#define NOTE_CS8 4435
+#define NOTE_D8  4699
+#define NOTE_DS8 4978
+#define REST 0
+
+// buzzer object for celebration
+MeBuzzer buzzer;
+
+// speed of music playing
+int tempo = 1000;
+
+// celebration
+// notes of the moledy followed by the duration.
+// a 4 means a quarter note, 8 an eighteenth , 16 sixteenth, so on
+// !!negative numbers are used to represent dotted notes,
+// so -4 means a dotted quarter note, that is, a quarter plus an eighteenth!!
+int melody[] = {
+ // Hedwig's theme fromn the Harry Potter Movies
+  // Socre from https://musescore.com/user/3811306/scores/4906610
+  // REST, 2, //this line is removed to remove the delay in playing music
+  NOTE_D4, 4,
+  NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,
+  NOTE_G4, 2, NOTE_D5, 4,
+  NOTE_C5, -2, 
+  NOTE_A4, -2,
+  NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,
+  NOTE_F4, 2, NOTE_GS4, 4,
+  NOTE_D4, -1, 
+  NOTE_D4, 4,
+
+  NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4, //10
+  NOTE_G4, 2, NOTE_D5, 4,
+  NOTE_F5, 2, NOTE_E5, 4,
+  NOTE_DS5, 2, NOTE_B4, 4,
+  NOTE_DS5, -4, NOTE_D5, 8, NOTE_CS5, 4,
+  NOTE_CS4, 2, NOTE_B4, 4,
+  NOTE_G4, -1,
+  NOTE_AS4, 4,
+     
+  NOTE_D5, 2, NOTE_AS4, 4,//18
+  NOTE_D5, 2, NOTE_AS4, 4,
+  NOTE_DS5, 2, NOTE_D5, 4,
+  NOTE_CS5, 2, NOTE_A4, 4,
+  NOTE_AS4, -4, NOTE_D5, 8, NOTE_CS5, 4,
+  NOTE_CS4, 2, NOTE_D4, 4,
+  NOTE_D5, -1, 
+  REST,4, NOTE_AS4,4,  
+
+  NOTE_D5, 2, NOTE_AS4, 4,//26
+  NOTE_D5, 2, NOTE_AS4, 4,
+  NOTE_F5, 2, NOTE_E5, 4,
+  NOTE_DS5, 2, NOTE_B4, 4,
+  NOTE_DS5, -4, NOTE_D5, 8, NOTE_CS5, 4,
+  NOTE_CS4, 2, NOTE_AS4, 4,
+  NOTE_G4, -1, 
+};
+
+// sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+// there are two values per note (pitch and duration), so for each note there are four bytes
+int notes = sizeof(melody) / sizeof(melody[0]) / 2;
+
+// this calculates the duration of a whole note in ms (60s/tempo)*4 beats
+int wholenote = (60000 * 4) / tempo;
+
+int divider = 0, noteDuration = 0;
+
+//function for celebration
+void celebrate(){
+  // iterate over the notes of the melody. 
+  // Remember, the array is twice the number of notes (notes + durations)
+  for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+
+    // calculates the duration of each note
+    divider = melody[thisNote + 1];
+    if (divider > 0) {
+      // regular note, just proceed
+      noteDuration = (wholenote) / divider;
+    } else if (divider < 0) {
+      // dotted notes are represented with negative durations!!
+      noteDuration = (wholenote) / abs(divider);
+      noteDuration *= 1.5; // increases the duration in half for dotted notes
+    }
+
+    // we only play the note for 90% of the duration, leaving 10% as a pause
+    buzzer.tone(melody[thisNote], noteDuration*0.9);
+
+    // Wait for the specief duration before playing the next note.
+    delay(noteDuration);
+    
+    // stop the waveform generation before the next note.
+    buzzer.noTone();
+  }
+}
+
+// setting motor speed to an integer between 1 and 255
+// maximum speed for motor
+uint8_t motorSpeed = 255;
+// define the movement period of the robot outside of colour tasks (turning, moving forward)
+#define MOVEMENT_PERIOD 20
+// global status; 0 = do nothing, 1 = mBot runs
+int status = 0;
+
+// ultrasonic and line sensor parameters
+// max microseconds to wait; choose according to max distance of wall
+#define TIMEOUT 2000
+// speed of sound
+#define SPEED_OF_SOUND 340
+// pin setting for ultrasonic based on Port 1 connection of mBot
+#define ULTRASONIC 12
+
+// assigning lineFinder to RJ25 port 2 
+MeLineFollower lineFinder(PORT_2);
+// assigning leftMotor to port M1 
+MeDCMotor leftMotor(M1);
+// assigning RightMotor to port M
+MeDCMotor rightMotor(M2);
+
+// IR sensor parameters
+// setting A3 as the voltage readings from the IR sensor
+#define VOLTAGE A3
+// threshold being too close to the right wall
+float thrsh_LEFT;
+// global variable to store ambient IR
+float IR_ambient;
+// variable that increments by one after each loop()
+int IR_calibrate = 0;
+// variable that determines how many loops before calibration IR
+#define IR_CALIBRATION_LOOPS 20
+
+// colour sensor parameters
+// define time delay before the next RGB colour turns ON to allow LDR to stabilize in milliseconds
+#define RGBWait 400
+// define time delay before taking another LDR reading in milliseconds
+#define LDRWait 10
+// define configuration for built-in LED (check indicator for colour sensor)
+MeRGBLed led(0, 30);
+// colour tasks turning time in millisec
+#define TURNING_TIME_MS 320
+// colour tasks moving forward time in millisec
+#define MOVING_FORWARD_TIME_MS 700
+
+// define 1A and 1B logic pins on HD74LS139P as A0 and A1 on mBot
+#define LOGIC_PIN_1A A0
+#define LOGIC_PIN_1B A1
+
+// define colour sensor LED pins
+int ledArray[3][2] = {{255, 255}, {0, 255}, {255, 0}}; // in the order of Red, Green, Blue
+// define readings for colour sensor as A2
+#define CS_LDR A2
+// floats to hold colour arrays (present values are taken from calibration on the ground)
+float colourArray[] = {0,0,0};
+float whiteArray[] = {853, 927, 858};
+float blackArray[] = {789, 782, 589};
+float greyDiff[] = {64, 145, 269};
+// string for serial print
+char colourStr[3][5] = {"R = ", "G = ", "B = "};
+//array to hold colour values in the order of: red, green, orange, purple, light blue (obtained experimental values)
+float colourVal[][3] = {{226, 66, 57}, {42, 149, 104}, {190, 111, 48}, {132, 111, 162}, {85, 190, 229}};
+// distance of the obtained RGB values from the RGB values of each predefined colour, with respect to 3D colour space,
+// in the order of: red, green, orange, purple, light blue, white
+float deviationVal[] = {0,0,0,0,0,0};
+
+void setup() {
+  // general setup for mBot
+  // setup A7 as input for the push button
+  pinMode(A7, INPUT);
+  // setup serial monitor for debugging purpose 
+  Serial.begin(9600);
+  delay(100);
+  
+  // setup logic pins
+  pinMode(LOGIC_PIN_1A, OUTPUT);
+  pinMode(LOGIC_PIN_1B, OUTPUT);
+
+  // setup for built-in LED
+  led.setpin(13);
+
+  //setup for IR sensor
+  pinMode(VOLTAGE, INPUT);
+  
+  // determining ambient voltage and set threshholds
+  // turn IR emitter off
+  analogWrite(LOGIC_PIN_1A, 255);
+  analogWrite(LOGIC_PIN_1B, 255);
+  // it takes around 28 milisec for LDR to stabalize
+  delay(30);
+  // read IR receiver and assign threshold values
+  float IR_out = analogRead(VOLTAGE);
+  // serial output for debugging
+  Serial.print("IR Voltage Reading: ");
+  Serial.println(IR_out);
+  // arbitrary values to be calibrated
+  thrsh_LEFT = IR_out;
+  // turn IR emitter back on
+  analogWrite(LOGIC_PIN_1A, 0);
+  analogWrite(LOGIC_PIN_1B, 0);
+  
+  // setBalance();  // option to calibrate for colour sensor
+  // serial print for debugging
+  for(int c = 0;c<=2;c++){
+    Serial.println(int(whiteArray[c]));
+    Serial.println(int(blackArray[c]));
+    Serial.println(int(greyDiff[c]));
+    Serial.println();
+  }
+
+  // LED indicator -- blink after setup
+  led.setColor(255, 255, 255);
+  led.show();
+  delay(500);
+  led.setColor(0, 0, 0);
+  led.show();
+}
+
+void loop() {
+  // if push button is pushed, the value will be very low
+  if (analogRead(A7) < 100) {
+  // toggle status
+  status = 1 - status;
+  // delay 150ms so that a button push won't be counted multiple times. 
+  delay(150); 
+  }
+  // run mBot only if status is 1; after the button is pushed
+  if (status == 1) {
+    // calibration condition for IR sensor (initially IR_calibrate is 0)
+    if(IR_calibrate == 0){
+      // turn IR emitter off
+      analogWrite(LOGIC_PIN_1A, 255);
+      analogWrite(LOGIC_PIN_1B, 255);
+      //it takes around 28 milisec for LDR to stabalize
+      delay(30); 
+      // read IR receiver and assign threshold values
+      float IR_out = analogRead(VOLTAGE);
+      // Serial.print("IR Calibrated Reading: ");
+      // Serial.println(IR_out);
+      // arbitrary values to be calibrated
+      thrsh_LEFT = IR_out;
+      // turn IR emitter back on
+      analogWrite(LOGIC_PIN_1A, 0);
+      analogWrite(LOGIC_PIN_1B, 0);
+    }
+    // increment IR_calibrate by 1, maximum of IR_CALIBRATION_LOOPS before resetting to 0
+    IR_calibrate = (IR_calibrate + 1) % IR_CALIBRATION_LOOPS;
+
+    // read the line sensor's state 
+    int sensorState = lineFinder.readSensors();
+    // if either sensor detects a line
+    if ((sensorState == S1_IN_S2_IN)||(sensorState == S1_IN_S2_OUT)||(sensorState == S1_OUT_S2_IN)) { 
+      leftMotor.stop(); // Left wheel stops
+      rightMotor.stop(); // Right wheel stops
+  
+      // activate colour sensor
+      // turn on one colour at a time and LDR reads 5 times
+      for(int c = 0;c<=2;c++){    
+        Serial.print(colourStr[c]);
+        //turn ON the LED, red, green or blue, one colour at a time.
+        analogWrite(LOGIC_PIN_1A, ledArray[c][0]); 
+        analogWrite(LOGIC_PIN_1B, ledArray[c][1]); 
+        delay(RGBWait);
+        //get the average of 5 consecutive readings for the current colour and return an average 
+        colourArray[c] = getAvgReading(5);
+        analogWrite(LOGIC_PIN_1A, 0); 
+        analogWrite(LOGIC_PIN_1B, 0); 
+        //the average reading returned minus the lowest value divided by the maximum possible range, multiplied by 255 will give a value between 0-255, representing the value for the current reflectivity (i.e. the colour LDR is exposed to)
+        colourArray[c] = (colourArray[c] - blackArray[c])/(greyDiff[c])*255;
+        Serial.println(int(colourArray[c])); //show the value for the current colour LED, which corresponds to either the R, G or B of the RGB code
+      }
+      // populate the deviation values of the measured RGB values from the prefined values of the respective colour
+      for(int i=0;i<=4;i++){
+        deviationVal[i] = 0;
+        for(int j=0;j<=2;j++){
+          deviationVal[i] = pow(colourArray[j] - colourVal[i][j], 2);
+        }
+      }
+      // populate the deviation values of the measured RGB values from the prefined values of white, 255 for RGB
+      for(int i=0;i<=2;i++){
+        deviationVal[5] = pow(colourArray[i] - (float)255, 2);
+      }
+      // determining the smallest deviation and assign to closest_col based on the position of the colours in array deviationVal
+      int closest_col = 0;
+      float min_colour_dev = deviationVal[0];
+      for(int i=0;i<=5;i++){
+        if(deviationVal[i] < min_colour_dev){
+          min_colour_dev = deviationVal[i];
+          closest_col = i;
+        }
+        // debugging
+        Serial.println(deviationVal[i]);
+      }
+      // special comparison between red and orange through Green and Blue values
+      if(closest_col == 0 || closest_col == 2){
+        if(colourArray[1] > colourArray[2] + 40)
+          closest_col = 2;
+        else
+          closest_col = 0;
+      }
+      // special comparison between orange and green through Red and Green values
+      if(closest_col == 1){
+        if(colourArray[0] < colourArray[1])
+          closest_col = 1;
+        else
+          closest_col = 2;
+      }
+      // debugging
+      Serial.println(closest_col);
+
+      // variables for ultrasonic sensor readings for orange colour task
+      int distance, duration;
+      // identifying the colour and doing the respective task
+      switch(closest_col){
+        case 0:
+          // Serial.println("Red detected.");
+          // LED indicator -- colour detected
+          led.setColor(255, 0, 0);
+          led.show();
+          // delay(200);
+          led.setColor(0, 0, 0);
+          led.show();
+          // do task
+          turnLeft();
+          break;
+        case 1:
+          // Serial.println("Green detected.");
+          // LED indicator -- colour detected
+          led.setColor(0, 255, 0);
+          led.show();
+          // delay(200);
+          led.setColor(0, 0, 0);
+          led.show();
+          // do task
+          turnRight();
+          break;
+        case 2:
+          // Serial.println("Orange detected.");
+          // LED indicator -- colour detected
+          led.setColor(255, 69, 0);
+          led.show();
+          // delay(200);
+          led.setColor(0, 0, 0);
+          led.show();
+
+          // get ultrasonic measurement
+          distance = 0;  
+          pinMode(12, OUTPUT);
+          digitalWrite(12, LOW); 
+          delayMicroseconds(2); 
+          digitalWrite(12, HIGH); 
+          delayMicroseconds(10);
+          digitalWrite(12, LOW);
+          pinMode(12, INPUT);
+          duration = pulseIn(12, HIGH, TIMEOUT); 
+          distance = duration / 2.0 / 1000000 * SPEED_OF_SOUND * 100;
+          // Serial.print("Ultrasonic Reading: ");
+          // Serial.println(distance);
+
+          // do task (based on ultrasonic readings if close to left, turn right, if close to right, turn left)
+          if(distance < 11 && distance != 0){
+            turnRight();
+            turnRight();
+          }else{
+            turnLeft();
+            turnLeft();
+          }
+          break;
+        case 3:
+          // Serial.println("Purple detected.");
+          // LED indicator -- colour detected
+          led.setColor(153, 50, 204);
+          led.show();
+          // delay(200);
+          led.setColor(0, 0, 0);
+          led.show();
+          // do task
+          turnturnLeft();
+          break;
+        case 4:
+          // Serial.println("Light Blue detected.");
+          // LED indicator -- colour detected
+          led.setColor(164, 219, 232);
+          led.show();
+          // delay(200);
+          led.setColor(0, 0, 0);
+          led.show();
+          // do task
+          turnturnRight();
+          break;
+        case 5:
+          // Serial.println("White detected.");
+          // LED indicator -- colour detected
+          led.setColor(255, 255, 255);
+          led.show();
+          // delay(200);
+          led.setColor(0, 0, 0);
+          led.show();
+          // do task
+          celebrate();
+          // stop mBot
+          status = 1 - status; 
+      }
+      // delay(500);
+    } else { // if no line detected
+
+      //get ultrasonic measurements
+      int distance = 0;
+      pinMode(12, OUTPUT);
+      digitalWrite(12, LOW); 
+      delayMicroseconds(2); 
+      digitalWrite(12, HIGH); 
+      delayMicroseconds(10);
+      digitalWrite(12, LOW);
+      pinMode(12, INPUT);
+      int duration = pulseIn(12, HIGH, TIMEOUT); 
+      distance = duration / 2.0 / 1000000 * SPEED_OF_SOUND * 100;
+      // Serial.print("Ultrasonic Reading: ");
+      // Serial.println(distance);
+
+      // get IR measurement
+      float IR_out = analogRead(VOLTAGE);
+      // Serial.print("IR Voltage Reading: ");
+      // Serial.println(IR_out);
+
+      // if too close to left, turn right, except when nothing is detected by ultrasonic
+      if (duration > 0 && distance < 7){
+        // turning right
+        leftMotor.run(-motorSpeed);
+        rightMotor.run(0);
+      }else if (IR_out < thrsh_LEFT - 350){ // if too close to right, turn left
+        // turning left
+        leftMotor.run(0);
+        rightMotor.run(motorSpeed);
+      }else{ // if not, move straight
+        //move forward
+        leftMotor.run(-motorSpeed);
+        rightMotor.run(motorSpeed);
+      }
+      // movement cycle
+      delay(MOVEMENT_PERIOD);
+    }
+    //turn IR emitter on
+    // analogWrite(LOGIC_PIN_1A, 0);
+    // analogWrite(LOGIC_PIN_1B, 0);
+  }
+  // leftMotor.stop(); 
+  // rightMotor.stop();
+  // delay(3); // decision making interval (in milliseconds)
+}
+
+// colour sensor functions
+// calibration for colour sensor
+void setBalance(){
+  // set white balance
+  Serial.println("Put White Sample For Calibration ...");
+  delay(5000); // delay for five seconds for getting sample ready
+  // LED indicator OFF during calibration
+  led.setColor(0, 0, 0);
+  led.show();
+  // scan the white sample.
+  // go through one colour at a time, set the maximum reading for each colour -- red, green and blue to the white array
+  for(int i = 0;i<=2;i++){
+     analogWrite(LOGIC_PIN_1A, ledArray[i][0]); 
+     analogWrite(LOGIC_PIN_1B, ledArray[i][1]); 
+     delay(RGBWait);
+     whiteArray[i] = getAvgReading(5); // scan 5 times and return the average, 
+     analogWrite(LOGIC_PIN_1A, 0); 
+     analogWrite(LOGIC_PIN_1B, 0); 
+  }
+  // LED indcator --- blink after white calibration
+  led.setColor(255, 255, 255);
+  led.show();
+  delay(500);
+  led.setColor(0, 0, 0);
+  led.show();
+  // done scanning white, time for the black sample.
+  // set black balance
+  Serial.println("Put Black Sample For Calibration ...");
+  delay(5000); // delay for five seconds for getting sample ready 
+  // go through one colour at a time, set the minimum reading for red, green and blue to the black array
+  for(int i = 0;i<=2;i++){
+     analogWrite(LOGIC_PIN_1A, ledArray[i][0]); 
+     analogWrite(LOGIC_PIN_1B, ledArray[i][1]); 
+     delay(RGBWait);
+     blackArray[i] = getAvgReading(5);
+     analogWrite(LOGIC_PIN_1A, 0); 
+     analogWrite(LOGIC_PIN_1B, 0); 
+     // the differnce between the maximum and the minimum gives the range
+     greyDiff[i] = whiteArray[i] - blackArray[i];
+  }
+  // LED indcator --- blink after black calibration
+  led.setColor(255, 255, 255);
+  led.show();
+  delay(500);
+  led.setColor(0, 0, 0);
+  led.show();
+  Serial.println("Colour Sensor Is Ready.");
+  }
+
+int getAvgReading(int times){
+  // find the average reading for the requested number of times of scanning LDR
+  int reading;
+  int total = 0;
+  // take the reading as many times as requested and add them up
+  for(int i = 0;i < times;i++){
+     reading = analogRead(CS_LDR);
+     total = reading + total;
+     delay(LDRWait);
+  }
+  // calculate the average and return it
+  return total/times;
+}
+
+// colour movement functions
+void turnRight(){
+  // Turning right (on the spot):
+  leftMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  rightMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  delay(TURNING_TIME_MS); // Keep turning right for this time duration
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+}
+
+void turnturnRight(){
+  // Turning right (on the spot):
+  leftMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  rightMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  delay(TURNING_TIME_MS); // Keep turning right for this time duration
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+  // Going forward:
+  leftMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  rightMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  delay(MOVING_FORWARD_TIME_MS);
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+  // Turning right (on the spot):
+  leftMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  rightMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  delay(TURNING_TIME_MS + 60); // Keep turning right for this time duration
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+}
+
+void turnLeft(){
+  // Turning left (on the spot):
+  leftMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  rightMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  delay(TURNING_TIME_MS); // Keep turning left for this time duration
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+}
+
+void turnturnLeft(){
+  // Turning left (on the spot):
+  leftMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  rightMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  delay(TURNING_TIME_MS); // Keep turning left for this time duration
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+  // Going forward:
+  leftMotor.run(-motorSpeed); // Negative: wheel turns anti-clockwise
+  rightMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  delay(MOVING_FORWARD_TIME_MS);
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+  // Turning left (on the spot):
+  leftMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  rightMotor.run(motorSpeed); // Positive: wheel turns clockwise
+  delay(TURNING_TIME_MS + 60); // Keep turning left for this time duration
+  leftMotor.stop(); // Stop left motor
+  rightMotor.stop(); // Stop right motor
+}
