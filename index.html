@@ -426,6 +426,7 @@
 				<!-- section title -->
 				<h2 class="section-title wow fadeInUp">Recent Works</h2>
 				<div class="spacer" data-height="60"></div>
+
 				<!-- portfolio filter (desktop) -->
 				<ul class="portfolio-filter list-inline wow fadeInUp">
 					<li class="current list-inline-item" data-filter="*">Everything</li>
@@ -434,6 +435,7 @@
 					<li class="list-inline-item" data-filter=".game_dev">Game Development</li>
 					<li class="list-inline-item" data-filter=".ai_dev">AI Development</li>
 				</ul>
+
 				<!-- portfolio filter (mobile) -->
 				<div class="pf-filter-wrapper">
 					<select class="portfolio-filter-mobile wow fadeInUp">
@@ -444,12 +446,47 @@
 						<option value=".ai_dev">AI Development</option>
 					</select>
 				</div>
-				<!-- portolio wrapper -->
+
+				<!-- portfolio wrapper -->
 				<div class="row portfolio-wrapper">
 
-					<!-- portfolio item -->
+					<!-- 1. Captcha Recognition System (May 2025) -->
 					<div class="col-md-4 col-sm-6 grid-item ai_dev">
-						<a href="#small-dialog30" class="work-content">
+						<a href="#small-dialog1" class="work-content">
+							<div class="portfolio-item rounded shadow-dark">
+								<div class="details">
+									<span class="term">AI Development</span>
+									<h4 class="title">Captcha Recognition System</h4>
+									<span class="more-button"><i class="icon-options"></i></span>
+								</div>
+								<div class="thumb">
+									<img src="images/works/captcha_recognition.png" alt="Captcha Recognition System" />
+									<div class="mask"></div>
+								</div>
+							</div>
+						</a>
+						<div id="small-dialog1" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/captcha_recognition.png" alt="Captcha Recognition System" />
+							<h2>Captcha Recognition System</h2>
+							<p>
+								A four‑stage deep‑learning CAPTCHA solver: targeted data cleaning (mask‑based median
+								filter +
+								morphological ops), connected‑component segmentation into 128×64 glyphs, custom CNN
+								(Conv→BN→ReLU→MaxPool blocks → Dense‑512→Dropout→Softmax‑36) trained with Adam, weight
+								decay, label smoothing, and callbacks,
+								with optional CRNN extension (bidirectional LSTMs + CTC loss). Training diversity via
+								SimGAN²‑style synthesizer + refiner. Achieves &gt;92% character‐level and &gt;68%
+								string‐level accuracy on mixed real/synthetic sets.
+							</p>
+							<p>May 2025</p>
+							<a href="https://github.com/yyangdaa/CS4243" target="_blank" class="btn btn-default">Source
+								Code</a>
+						</div>
+					</div>
+
+					<!-- 2. ASM Optimiser (September 2024) -->
+					<div class="col-md-4 col-sm-6 grid-item innovation ai_dev">
+						<a href="#small-dialog2" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
 									<span class="term">Innovation, AI Development</span>
@@ -457,26 +494,20 @@
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images/works/asm.webp" alt="Portfolio-title" />
+									<img src="images/works/asm.webp" alt="ASM Optimiser" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog30" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images/works/asm.webp" alt="Another" />
-							<h2>ASM Optimizer</h2>
+						<div id="small-dialog2" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/asm.webp" alt="ASM Optimiser" />
+							<h2>ASM Optimiser</h2>
 							<p>
-								In the "Project ASM Optimiser" we tackle the challenge of optimizing quadratic cost
-								functions using assembly language to implement gradient descent. Conducted as part of
-								the Computer Organisation module at NUS, this project required us to develop a highly
-								efficient assembly subroutine that minimizes the cost function by accurately calculating
-								the optimal parameter settings. By mirroring the logic of the C function
-								"optimize_c_rounded" and aiming to achieve even greater precision, our assembly
-								implementation not only demonstrates the power of low-level programming in handling
-								complex mathematical operations but also underscores the potential for significant
-								performance enhancements in computational tasks. This work highlights our methodological
-								approach, our adaptations to the traditional gradient descent algorithm, and our
-								strategic use of assembly language to enhance computational efficiency and accuracy.
+								Optimized quadratic cost functions in x86 assembly by mirroring and refining a C
+								gradient‑descent routine.
+								Developed a high‑precision subroutine to compute optimal parameters, achieving
+								significant speedups
+								over the reference implementation.
 							</p>
 							<p>September 2024</p>
 							<a href="files/CG2028_Report.pdf" target="_blank" class="btn btn-default">Download
@@ -486,43 +517,40 @@
 						</div>
 					</div>
 
-					<!-- portfolio item -->
-					<div class="col-md-4 col-sm-6 grid-item web_dev">
-						<a href="#small-dialog32" class="work-content">
+					<!-- 3. Project Smart Bin (June 2024) -->
+					<div class="col-md-4 col-sm-6 grid-item web_dev ai_dev">
+						<a href="#small-dialog3" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
-									<span class="term">Web Development, UI/UX Designing</span>
+									<span class="term">Web Development, AI Development</span>
 									<h4 class="title">Project Smart Bin</h4>
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images\works\smart_bin.webp" alt="Portfolio-title" />
+									<img src="images/works/smart_bin.webp" alt="Project Smart Bin" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog32" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images\works\smart_bin.webp" alt="Another" />
+						<div id="small-dialog3" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/smart_bin.webp" alt="Project Smart Bin" />
 							<h2>Project Smart Bin</h2>
-							<p>For the Huawei Smart Bin project, I crafted a streamlined web interface using Flutter,
-								enhancing the user experience with intuitive design and responsiveness across devices.
-								The site features an interactive, dynamic layering effect that simulates a parallax
-								experience, emphasizing the bin’s smart capabilities. I integrated advanced machine
-								learning algorithms, developed with PyTorch, to enable sophisticated waste sorting and
-								categorization. This blend of Flutter and PyTorch demonstrates my commitment to
-								leveraging cutting-edge technology to deliver both functionality and aesthetic
-								refinement in environmental solutions.
+							<p>
+								Built a Flutter-based web UI with responsive, parallax-style layers for waste sorting.
+								Integrated
+								PyTorch models for real‑time ML-driven categorization. Demonstrated at Huawei Tech4City
+								Competition.
 							</p>
-							<p>June 2024 (Huawei Tech4City Competition)</p>
+							<p>June 2024</p>
 							<a href="https://github.com/orgs/HuaweiSmartBin/repositories" target="_blank"
 								class="btn btn-default">Source Code</a>
 							<a href="files/Huwei Smart Bin.pptx" target="_blank" class="btn btn-default">Pitch Deck</a>
 						</div>
 					</div>
 
-					<!-- portfolio item -->
-					<div class="col-md-4 col-sm-6 grid-item web_dev">
-						<a href="#small-dialog18" class="work-content">
+					<!-- 4. BudgetBuddy (April 2024) -->
+					<div class="col-md-4 col-sm-6 grid-item web_dev innovation">
+						<a href="#small-dialog4" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
 									<span class="term">Web Development, Innovation</span>
@@ -530,32 +558,28 @@
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images/works/budgetbuddy.webp" alt="Portfolio-title" />
+									<img src="images/works/budgetbuddy.webp" alt="BudgetBuddy" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog18" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images/works/budgetbuddy.webp" alt="Another" />
+						<div id="small-dialog4" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/budgetbuddy.webp" alt="BudgetBuddy" />
 							<h2>BudgetBuddy</h2>
-							<p>"BudgetBuddy" is a Java-based command-line interface (CLI) project designed for efficient
-								personal finance management. The tool allows users to add expenses, view their budget,
-								and track income in a simple, text-based interface. The project focuses on delivering a
-								lightweight yet functional solution for budgeting, where users can interact via
-								straightforward commands. The source code includes a downloadable jar file, which you
-								can try out by running it on your local terminal for a hands-on experience.
+							<p>
+								Java CLI for lightweight personal finance: add expenses, view budgets, and track income
+								via simple commands.
+								Packaged as a runnable JAR for easy terminal use.
 							</p>
 							<p>April 2024</p>
 							<a href="https://github.com/AY2324S2-CS2113-T12-3/tp?tab=readme-ov-file" target="_blank"
-								class="btn btn-default">
-								Source Code
-							</a>
+								class="btn btn-default">Source Code</a>
 						</div>
 					</div>
 
-					<!-- portfolio item -->
+					<!-- 5. Arcade (March 2024) -->
 					<div class="col-md-4 col-sm-6 grid-item innovation">
-						<a href="#small-dialog20" class="work-content">
+						<a href="#small-dialog5" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
 									<span class="term">Innovation, FPGA</span>
@@ -563,25 +587,18 @@
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images\works\fpga_project.webp" alt="Portfolio-title" />
+									<img src="images/works/fpga_project.webp" alt="Arcade FPGA Project" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog20" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images\works\fpga_project.webp" alt="Another" />
-							<h2>Orphanage Agape</h2>
+						<div id="small-dialog5" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/fpga_project.webp" alt="Arcade FPGA Project" />
+							<h2>Arcade</h2>
 							<p>
-								In an ambitious academic project at the National University of Singapore, I led the
-								design and development of an FPGA-based game arcade, utilizing Vivado and Verilog. This
-								system was built on a single FPGA board coupled with an OLED screen, providing a
-								hands-on approach to interactive game design. My primary responsibilities included the
-								detailed design of each game component and the overall integration of the system. We
-								began our project planning early in the course, which was crucial for addressing the
-								intricate challenges of integrating diverse game functions smoothly. This project not
-								only boosted my technical expertise in sophisticated hardware design tools but also
-								demonstrated my capabilities in detailed component design and effective project
-								management.
+								Led an NUS project designing an FPGA-based game arcade (Verilog + Vivado) on a single
+								board with OLED.
+								Managed component design, system integration, and interactive gameplay functionality.
 							</p>
 							<p>March 2024</p>
 							<a href="https://github.com/EE2026-Group-X/project_arcade" target="_blank"
@@ -589,32 +606,28 @@
 						</div>
 					</div>
 
-					<!-- portfolio item -->
+					<!-- 6. InstaFood (July 2023) -->
 					<div class="col-md-4 col-sm-6 grid-item web_dev">
-						<a href="#small-dialog29" class="work-content">
+						<a href="#small-dialog6" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
 									<span class="term">Web Development, UI/UX Designing</span>
-									<h4 class="title"> InstaFood</h4>
+									<h4 class="title">InstaFood</h4>
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images/works/InstaFood.webp" alt="Portfolio-title" />
+									<img src="images/works/InstaFood.webp" alt="InstaFood" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog29" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images/works/InstaFood.webp" alt="Another" />
+						<div id="small-dialog6" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/InstaFood.webp" alt="InstaFood" />
 							<h2>InstaFood</h2>
-							<p>I designed and launched a custom website for InstaFood, a vibrant community for food
-								lovers. Powered by React.js and Node.js, the platform offers a dynamic space where
-								culinary enthusiasts can share, explore, and celebrate diverse flavors. The website
-								features robust user authentication and a sleek Content Management System (CMS),
-								enabling users to effortlessly share recipes and dining experiences. By integrating
-								advanced SEO strategies, InstaFood ensures not just visibility but a prominent spot in
-								search engine results, making it a go-to hub for anyone passionate about food.
-
+							<p>
+								React.js + Node.js community platform with user auth, CMS for recipes, and SEO
+								optimization.
+								Dynamic UI for food lovers to share and explore culinary experiences.
 							</p>
 							<p>July 2023</p>
 							<a href="https://orbital-386a9.web.app/" target="_blank" class="btn btn-default">Visit
@@ -625,163 +638,10 @@
 								class="btn btn-default">Video Demo</a>
 						</div>
 					</div>
-					<!-- captcha -->
-					<div class="col-md-4 col-sm-6 grid-item ai_dev">
-						<a href="#small-dialog30" class="work-content">
-							<div class="portfolio-item rounded shadow-dark">
-								<div class="details">
-									<span class="term">AI Development</span>
-									<h4 class="title">Captcha Recognition System</h4>
-									<span class="more-button"><i class="icon-options"></i></span>
-								</div>
-								<div class="thumb">
-									<img src="images/works/captcha_recognition.png" alt="Portfolio-title" />
-									<div class="mask"></div>
-								</div>
-							</div>
-						</a>
-						<div id="small-dialog30" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images/works/InstaFood.webp" alt="Another" />
-							<h2>Captcha Recognition System</h2>
-							<p>Our system is a four‑stage deep‑learning CAPTCHA solver that begins with targeted data
-								cleaning—using a mask‑based median filter and morphological operations to remove
-								interference lines while preserving stroke integrity—followed by connected‑component
-								segmentation feeding 128×64 glyph crops into a custom CNN (stacked Conv→BN→ReLU→MaxPool
-								blocks, Dense‑512→Dropout→Softmax‑36) trained with Adam (lr=1e‑3, weight_decay=1e‑6),
-								label smoothing, and callbacks (ModelCheckpoint, ReduceLROnPlateau, EarlyStopping). An
-								optional end‑to‑end CRNN extension reshapes CNN feature maps into time‑steps for
-								bidirectional LSTMs and employs CTC loss to decode variable‑length sequences without
-								explicit segmentation. Training diversity is boosted by a SimGAN²‑inspired synthesizer +
-								refiner that produces both pixel‑tweaked real samples and fully synthetic CAPTCHAs. The
-								complete pipeline delivers >92% character‑level and >68% string‑level accuracy on mixed
-								real/synthetic test sets, ensuring robust, high‑accuracy recognition across fonts,
-								distortions, and noise.
-							</p>
-							<p>May 2025</p>
-							<a href="https://github.com/yyangdaa/CS4243" target="_blank" class="btn btn-default">Source
-								Code</a>
-						</div>
-					</div>
 
-					<!-- portfolio item -->
-					<!-- <div class="col-md-4 col-sm-6 grid-item innovation achievements">
-						<a href="#small-dialog17" class="work-content">
-							<div class="portfolio-item rounded shadow-dark">
-								<div class="details">
-									<span class="term">Innovation</span>
-									<h4 class="title">Thermal Floater: Research Paper</h4>
-									<span class="more-button"><i class="icon-options"></i></span>
-								</div>
-								<div class="thumb">
-									<img src="images/works/tf3.png" alt="Portfolio-title" />
-									<div class="mask"></div>
-								</div>
-							</div>
-						</a>
-						<div id="small-dialog17" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images\thermal_research_paper.png" alt="Another" />
-							<h2>Thermoelectric generators using skutterudites & selenium alloys with endotaxial
-								nanostructures for enhanced solar thermal energy conversion.</h2>
-							<p>This study investigates the potential of skutterudites and selenium alloys with
-								endotaxial nanostructures in enhancing the efficiency of thermoelectric generators
-								(TEGs) for solar-thermal energy applications. Recognizing the limitations of traditional
-								TEG materials at high temperatures, this paper focuses on the advancement of
-								skutterudites and bismuth telluride selenide
-								(Bi<sub>2</sub>Te<sub>3</sub>Se<sub>2</sub>), and lead telluride selenide (PbTeSe)
-								alloys. Endotaxial nanostructuring is highlighted for its effectiveness in reducing
-								thermal conductivity while maintaining electrical conductivity, thereby significantly
-								improving the thermoelectric figure of merit (zT). The paper reviews the principles of
-								TEGs and the latest developments in nanostructured thermoelectric materials,
-								particularly at elevated temperatures suitable for solar-thermal systems. It also
-								discusses the integration challenges and environmental and economic aspects of these
-								advanced materials in TEGs.</p>
-							<p>December 2023</p>
-							<a href="files/Thermal_Floater_Paper.pdf" target="_blank" class="btn btn-default">Download
-								Paper</a>
-						</div>
-					</div> -->
-
-					<!-- portfolio item -->
-					<!-- <div class="col-md-4 col-sm-6 grid-item achievements">
-						<a href="#small-dialog21" class="work-content">
-							<div class="portfolio-item rounded shadow-dark">
-								<div class="details">
-									<span class="term">Achievements, Innovation</span>
-									<h4 class="title">Children's Climate Prize</h4>
-									<span class="more-button"><i class="icon-options"></i></span>
-								</div>
-								<div class="thumb">
-									<img src="images/works/ccprize.png" alt="Portfolio-title" />
-									<div class="mask"></div>
-								</div>
-							</div>
-						</a>
-						<div id="small-dialog21" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images\ccprize.png" alt="Another" />
-							<h2>Children's Climate Prize</h2>
-							<p>I was honored with the prestigious Children's Climate Prize in 2022 for being the proud
-								creator of "The Thermal Floater" - an innovative solution to harness solar thermal
-								energy. I was recognized for this groundbreaking invention, and this international
-								award, sponsored by Telge Energi, celebrates young visionaries committed to
-								environmental and climate issues. The Children's Climate Prize acknowledges the power of
-								youth innovation in addressing global environmental challenges. Winning this award has
-								not only been a milestone in my journey but also a testament to the potential of young
-								minds in driving meaningful change.
-								<br><br>
-								My achievement with The Thermal Floater has been highlighted in major news outlets like
-								Global India, National Geographic, Heart 17, The Ethicalist, The Statesman, MyNewsDesk,
-								The Indian Awaaz, Ecovoice.au, Times of India, hakansonunited, Financial Smachar, and
-								Euronews. These recognitions underscore the relevance and impact of my invention in the
-								global pursuit of sustainable energy solutions. The prize included a diploma, a medal,
-								and a grant of SEK 100,000, which I am utilizing to advance my project, aiming to bring
-								this revolutionary idea to a global audience. Through The Thermal Floater, I aspire to
-								contribute to a greener, more sustainable world.
-							</p>
-							<p>February 2023</p>
-							<a href="files/CCP22-Diplom-A4.pdf" target="_blank" class="btn btn-default">Download
-								Certificate</a>
-						</div>
-					</div> -->
-					<!-- portfolio item -->
-					<!-- <div class="col-md-4 col-sm-6 grid-item ai_dev">
-						<a href="#small-dialog34" class="work-content">
-							<div class="portfolio-item rounded shadow-dark">
-								<div class="details">
-									<span class="term">AI Development</span>
-									<h4 class="title">Stable Diffusion Model</h4>
-									<span class="more-button"><i class="icon-options"></i></span>
-								</div>
-								<div class="thumb">
-									<img src="images/works/stable_diffusion.png" alt="Portfolio-title" />
-									<div class="mask"></div>
-								</div>
-							</div>
-						</a>
-						<div id="small-dialog34" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images\stable_diffusion.png" alt="Another" />
-							<h2>Stable Diffusion</h2>
-							<p>I developed a groundbreaking Stable Diffusion Model optimized for low VRAM GPUs, a
-								pioneering solution for high-quality image generation on more accessible hardware. My
-								development, crafted through intensive training on Azure VMs with an investment of
-								$16,000 AWS Credits over four months, is tailored to perform exceptionally on laptops
-								with just 4GB of VRAM. This model stands apart in its ability to produce images
-								comparable to those generated by models requiring 16GB of RAM. A significant
-								breakthrough is the model's precision in rendering hands, a common challenge in
-								AI-generated imagery, ensuring flawlessly detailed and realistic hand representations.
-								Additionally, I have enriched the model with a diverse artistic flair, incorporating
-								over additional 500 million anime-style images sourced from platforms like Pixiv and
-								Danbooru. This unique blend of technological sophistication and artistic diversity
-								positions my model as a distinct and superior choice in the realm of AI-generated art
-								and some of it was automated and posted on instagram at @incineroarblast.
-							</p>
-							<p>September 2023</p>
-							<a href="https://www.instagram.com/incineroarblast/" target="_blank"
-								class="btn btn-default">Visit Instagram</a>
-						</div>
-					</div> -->
-					<!-- portfolio item -->
+					<!-- 7. Alex to the Rescue (April 2023) -->
 					<div class="col-md-4 col-sm-6 grid-item innovation">
-						<a href="#small-dialog25" class="work-content">
+						<a href="#small-dialog7" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
 									<span class="term">Innovation, 3D Modeling</span>
@@ -789,23 +649,18 @@
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images/works/alex_to_rescue.webp" alt="Portfolio-title" />
+									<img src="images/works/alex_to_rescue.webp" alt="Alex to the Rescue" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog25" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images/works/alex_to_rescue.webp" alt="Another" />
+						<div id="small-dialog7" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/alex_to_rescue.webp" alt="Alex to the Rescue" />
 							<h2>Alex to the Rescue</h2>
 							<p>
-								This project involves a tele-operated robot named "Alex," equipped with advanced sensor
-								technologies to navigate a 7x5 grid maze. Key components include a forward-facing LIDAR
-								for real-time mapping and an ultrasonic sensor for precise distance measurements. Using
-								Hector SLAM, the robot manually plots the environment while identifying colored objects.
-								Communication between a Raspberry Pi and Arduino is established through USART, allowing
-								for efficient control and sensor data processing. Alex's teleoperation utilizes VNC and
-								SSH protocols for remote control, and its movement and detection systems are tightly
-								integrated to achieve real-time task execution within 8 minutes.
+								Tele‑operated robot with LIDAR (Hector SLAM), ultrasonic distance sensing, and USART
+								comms
+								between Raspberry Pi & Arduino. Remote control via VNC/SSH, real‑time maze navigation.
 							</p>
 							<p>April 2023</p>
 							<a href="files/Alex_to_rescue_report.docx" target="_blank" class="btn btn-default">Download
@@ -813,9 +668,9 @@
 						</div>
 					</div>
 
-					<!-- portfolio item -->
+					<!-- 8. The Amazing Race (November 2022) -->
 					<div class="col-md-4 col-sm-6 grid-item innovation">
-						<a href="#small-dialog36" class="work-content">
+						<a href="#small-dialog8" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
 									<span class="term">Innovation</span>
@@ -823,36 +678,27 @@
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images/works/amazing_race.webp" alt="Portfolio-title" />
+									<img src="images/works/amazing_race.webp" alt="The Amazing Race" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog36" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images/works/amazing_race.webp" alt="Another" />
+						<div id="small-dialog8" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/amazing_race.webp" alt="The Amazing Race" />
 							<h2>The Amazing Race</h2>
-							<p>In the "The A-maze-ing Race" project, I developed a robot that autonomously navigates
-								through a maze using a combination of sensors and efficient control algorithms. The
-								robot was built using an mCore microcontroller, equipped with ultrasonic and infrared
-								(IR) sensors for obstacle detection, and a custom-built color sensor for recognizing
-								waypoints. The robot's movement was controlled by H-Bridge chips and DC motors, while
-								RGB LEDs facilitated color-based decision-making. We utilized Arduino for programming
-								the logic, which included fine-tuning the robot’s path correction using sensor feedback
-								and calibrating the IR and color sensors to ensure accurate navigation. Our system
-								seamlessly integrated sensor data, control logic, and real-time adjustments to solve the
-								maze efficiently.
+							<p>
+								Autonomous maze‑navigating robot on mCore microcontroller with ultrasonic & IR sensors,
+								custom color sensor, H‑Bridge motor control, and Arduino logic for path correction.
 							</p>
 							<p>November 2022</p>
 							<a href="files/CG1111A Project Report.docx.pdf" target="_blank"
 								class="btn btn-default">Download Report</a>
-							<a href="files/CG1111A_final_code.txt" target="_blank" class="btn btn-default">Source
-								Code</Code></a>
 						</div>
 					</div>
 
-					<!-- portfolio item -->
+					<!-- 9. Flappy Bird Pro (April 2022) -->
 					<div class="col-md-4 col-sm-6 grid-item game_dev">
-						<a href="#small-dialog1" class="work-content">
+						<a href="#small-dialog9" class="work-content">
 							<div class="portfolio-item rounded shadow-dark">
 								<div class="details">
 									<span class="term">Game Development</span>
@@ -860,17 +706,18 @@
 									<span class="more-button"><i class="icon-options"></i></span>
 								</div>
 								<div class="thumb">
-									<img src="images/works/flappy_bird.webp" alt="Portfolio-title" />
+									<img src="images/works/flappy_bird.webp" alt="Flappy Bird Pro" />
 									<div class="mask"></div>
 								</div>
 							</div>
 						</a>
-						<div id="small-dialog1" class="white-popup zoom-anim-dialog mfp-hide">
-							<img src="images/works/flappy_bird.webp" alt="Another" />
+						<div id="small-dialog9" class="white-popup zoom-anim-dialog mfp-hide">
+							<img src="images/works/flappy_bird.webp" alt="Flappy Bird Pro" />
 							<h2>Flappy Bird Pro</h2>
 							<p>
-								Crafted with care, this game marks my debut in game development, entirely built using
-								JavaScript to bring a delightful, engaging experience to players everywhere.
+								My first JavaScript game: a polished Flappy Bird clone with smooth physics, animated
+								sprites,
+								and responsive controls for an engaging web experience.
 							</p>
 							<p>April 2022</p>
 							<a href="https://yyangdaa.github.io/Flappy-Bird/" target="_blank"
@@ -881,6 +728,7 @@
 				</div>
 			</div>
 		</section>
+
 		<!-- 
 		<section id="prices">
 			<div class="container">
